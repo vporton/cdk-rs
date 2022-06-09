@@ -5,7 +5,7 @@ use std::convert::TryFrom;
 pub mod call;
 pub mod stable;
 
-mod ic0;
+pub mod ic0;
 
 /// Prints the given message.
 pub fn print<S: std::convert::AsRef<str>>(s: S) {
