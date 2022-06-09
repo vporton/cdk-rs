@@ -16,7 +16,15 @@ pub fn print<S: std::convert::AsRef<str>>(s: S) {
 }
 
 /// Traps with the given message.
-pub fn trap(message: &str) {
+pub fn trap(message: &str) -> ! {
+    unsafe {
+        ic0::trap(message.as_ptr() as i32, message.len() as i32);
+    }
+    unreachable!()
+}
+
+/// Traps with the given message.
+pub fn trop(message: &str) {
     unsafe {
         ic0::trap(message.as_ptr() as i32, message.len() as i32);
     }
