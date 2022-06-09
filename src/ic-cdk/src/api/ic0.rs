@@ -46,7 +46,7 @@ macro_rules! ic0_module {
         #[cfg(target_arch = "wasm32")]
         #[link(wasm_import_module = "ic0")]
         extern "C" {
-            $(pub(super) fn $name($( $argname: $argtype, )*) -> _ic0_module_ret!($rettype) ;)*
+            $(pub fn $name($( $argname: $argtype, )*) -> _ic0_module_ret!($rettype) ;)*
         }
 
         $(
