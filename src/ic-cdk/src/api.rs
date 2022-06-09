@@ -8,20 +8,18 @@ pub mod stable;
 pub mod ic0;
 
 /// Prints the given message.
-pub fn print<S: std::convert::AsRef<str>>(s: S) -> ! {
+pub fn print<S: std::convert::AsRef<str>>(s: S) -> {
     let s = s.as_ref();
     unsafe {
         ic0::debug_print(s.as_ptr() as i32, s.len() as i32);
     }
-    unreachable!()
 }
 
 /// Traps with the given message.
-pub fn trap(message: &str) -> ! {
+pub fn trap(message: &str) ->  {
     unsafe {
         ic0::trap(message.as_ptr() as i32, message.len() as i32);
     }
-    unreachable!()
 }
 
 /// Get current timestamp
