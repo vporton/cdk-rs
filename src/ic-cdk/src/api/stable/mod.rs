@@ -191,6 +191,11 @@ impl<M: StableMemory> StableWriter<M> {
         self.offset += buf.len();
         Ok(buf.len())
     }
+
+    /// Consumes the writer and releases the underlying memory.
+    pub fn release_memory(self) -> M {
+        self.memory
+    }
 }
 
 impl<M: StableMemory> io::Write for StableWriter<M> {
@@ -297,6 +302,11 @@ impl<M: StableMemory> StableReader<M> {
         self.memory.stable_read(self.offset as u32, read_buf);
         self.offset += read_buf.len();
         Ok(read_buf.len())
+    }
+
+    /// Consumes the reader and releases the underlying memory.
+    pub fn release_memory(self) -> M {
+        self.memory
     }
 }
 
