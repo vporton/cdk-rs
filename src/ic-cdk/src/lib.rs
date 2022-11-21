@@ -9,6 +9,8 @@
 #[cfg(target_feature = "atomics")]
 compile_error!("This version of the CDK does not support multithreading.");
 
+use std::sync::Once;
+
 #[doc(inline)]
 pub use ic_cdk_macros::*;
 
@@ -21,7 +23,7 @@ pub use api::call::call;
 pub use api::call::notify;
 pub use api::{caller, id, print, trap};
 
-static mut DONE: bool = false;
+static SETUP: Once = Once::new();
 
 /// Re-exports crates those are necessary for using ic-cdk
 pub mod export {
@@ -32,13 +34,7 @@ pub mod export {
 
 /// Setup the stdlib hooks.
 pub fn setup() {
-    unsafe {
-        if DONE {
-            return;
-        }
-        DONE = true;
-    }
-    printer::hook()
+    SETUP.call_once(printer::hook);
 }
 
 /// See documentation for [spawn].
